@@ -1,4 +1,5 @@
-FROM rust:1.82.0 AS builder
+# official plex image is old, bullseye required
+FROM rust:1.82.0-bullseye AS builder
 
 WORKDIR /usr/src/app
 
@@ -7,7 +8,7 @@ COPY . .
 RUN cargo build --release
 
 
-FROM debian:12.7-slim
+FROM debian:bullseye-slim
 
 RUN apt-get update && apt-get install -y \
     ca-certificates \
