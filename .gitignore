@@ -1,0 +1,5 @@
+/target
+docker-compose.yml
+notes.md
+test.sh
+nginx.conf
