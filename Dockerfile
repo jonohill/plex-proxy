@@ -1,5 +1,11 @@
 # official plex image is old, bullseye required
-FROM rust:1.82.0-bullseye AS builder
+FROM rust:1.82.0-alpine AS builder
+
+RUN apk add --no-cache \
+    musl-dev \
+    openssl-dev \
+    openssl-libs-static \
+    build-base
 
 WORKDIR /usr/src/app
 
@@ -8,12 +14,7 @@ COPY . .
 RUN cargo build --release
 
 
-FROM debian:bullseye-slim
-
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    openssl \
-    && rm -rf /var/lib/apt/lists/*
+FROM alpine
 
 COPY --from=builder /usr/src/app/target/release/plex-proxy /usr/local/bin/plex-proxy
 
