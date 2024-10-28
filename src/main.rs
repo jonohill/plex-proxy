@@ -20,9 +20,11 @@ async fn main() {
     let plex_url = env_var("PLEX_URL");
     let plex_library_path = env_var("PLEX_LIBRARY_PATH");
     let rclone_url = env_var("RCLONE_URL");
+    let port = env_var("PORT");
 
     let proxy = make_proxy(plex_url, plex_library_path, rclone_url);
 
-    let listener = TcpListener::bind("0.0.0.0:32401").await.unwrap();
+    let addr = format!("0.0.0.0:{}", port);
+    let listener = TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, proxy).await.unwrap();
 }
