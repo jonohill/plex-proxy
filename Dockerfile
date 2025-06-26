@@ -1,5 +1,5 @@
 # official plex image is old, bullseye required
-FROM rust:1.87.0-alpine AS builder
+FROM rust:1.88.0-alpine AS builder
 
 RUN apk add --no-cache \
     musl-dev \
